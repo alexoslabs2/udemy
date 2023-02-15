@@ -1,0 +1,11 @@
+Configuração HTTPS
+
+yum install epel-release mod_ssl python3-certbot-apache
+
+certbot -n --apache --agree-tos -m alexos@alexos.xyz -d alexos.xyz -d www.alexos.xyz
+
+echo "0 0,12 * * * root certbot renew -q" | sudo tee -a /etc/crontab > /dev/null
+
+Agendamento que executará todos os dias meio-dia e meia-noite
+
+

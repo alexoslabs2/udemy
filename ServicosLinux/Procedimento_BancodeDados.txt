@@ -1,0 +1,18 @@
+Procedimento Banco de Dados
+
+sudo  yum install -y mariadb mariadb-server 
+
+sudo systemctl start mariadb
+sudo systemctl enable mariadb
+
+mysql_secure_installation
+
+mysql -u root -p
+
+CREATE DATABASE db_wordpress;
+GRANT ALL PRIVILEGES on db_wordpress.* to 'wordpdbress'@'localhost' identified by '';
+FLUSH PRIVILEGES;
+exit
+
+
+

@@ -1,0 +1,74 @@
+Hardening Wordpress
+
+https://alexos.xyz/wp-includes/
+
+cd /etc/httpd/conf/
+
+sudo cp httpd.conf httpd.conf.bkp2010
+
+sudo vim httpd.conf
+
+Remove Indexes
+
+sudo systemctl restart httpd
+
+https://alexos.xyz/wp-includes/
+
+==
+
+https://alexos.xyz/xmlrpc.php
+
+https://alexos.xyz/wp-admin/
+
+https://alexos.xyz/wp-login.php
+
+
+sudo htdigest -c /var/www/html/wordpress/.pass 'Acesso Restrito' user
+
+cd /etc/httpd/conf.d/
+
+sudo cp alexosvyz-le-ssl.conf alexosvyz-le-ssl.bkp2010
+
+sudo vim alexosvyz-le-ssl.conf
+
+<Directory /var/www/html/wordpress/wp-admin>
+  AuthType Digest
+  AuthName "Acesso Restrito"
+  AuthDigestProvider file
+  AuthUserFile /var/www/html/wordpress/.pass
+  Require valid-user
+  Order Allow,Deny
+  Allow from all
+  Options FollowSymLinks
+  AllowOverride All
+</Directory>
+
+<Files wp-login.php>
+  AuthType Digest
+  AuthName "Acesso Restrito"
+  AuthDigestProvider file
+  AuthUserFile /var/www/html/wordpress/.pass
+  Require valid-user
+  Order Allow,Deny
+  Allow from all
+  Options FollowSymLinks
+  AllowOverride All
+</Files>
+
+<Files xmlrpc.php>
+order deny,allow
+deny from all
+</Files>
+
+ErrorDocument 403 https://alexos.xyz
+ErrorDocument 404 https://alexos.xyz
+
+sudo apachectl -t
+
+sudo systemctl restart httpd
+
+Plugins
+
+Bad Behavior
+Sucuri Security - Auditing, Malware Scanner and Hardening
+

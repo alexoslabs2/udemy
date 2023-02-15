@@ -1,0 +1,17 @@
+Instalação Apache e PHP
+
+sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+
+sudo yum -y install https://rpms.remirepo.net/enterprise/remi-release-8.rpm 
+
+sudo yum -y install yum-utils
+
+sudo dnf module list php
+
+sudo yum module enable php:remi-7.4
+
+sudo yum install -y httpd php php-common php-mysql php-gd php-xml wget tar bzip2 unzip telnet
+
+sudo systemctl enable httpd
+ 
+sudo systemctl start httpd 

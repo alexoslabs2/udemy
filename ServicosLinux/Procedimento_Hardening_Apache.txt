@@ -1,0 +1,79 @@
+Hardening Apache
+
+cd /etc/httpd/conf/
+
+sudo httpd.conf httpd.bkp1910
+
+vim /etc/httpd/conf/httpd.conf
+
+ServerSignature Off
+ServerTokens Prod
+TraceEnable Off
+
+
+<IfModule mod_headers.c>
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+<IfModule mod_headers.c>
+    Header edit Set-Cookie ^(.*)$ $1;HttpOnly;Secure
+</IfModule>
+
+mv welcome.conf welcome
+
+sudo vim alexosxyz.conf
+
+<VirtualHost *:80>
+ServerName alexos.xyz
+ServerAlias www.alexos.xyz
+DocumentRoot /var/www/html/wordpress/
+ErrorLog /var/log/httpd/alexosxyz.error.log
+CustomLog /var/log/httpd/alexosxyz.access.log combined
+</VirtualHost>
+
+PHP
+
+vim /etc/php.ini
+expose_php = Off
+
+sudo apachectl -t 
+
+sudo systemctl restart httpd
+
+Performance Tuning
+
+yum install top htop
+
+Prefork
+Cria processos filhos que manipula um requisição por vez
+Mais seguro
+
+Worker
+Processos filhos manipulam várias thread, possibilita um grande número de conexões concorrentes
+Risco de uma thread lê dados de outra thread 
+
+sudo vim /etc/httpd/conf.modules.d/00-mpm.conf
+
+sudo vim /etc/httpd/conf.d/prefork.conf
+
+
+StartServers — número de processos do servidor para iniciar
+MinSpareServers — quantidade mínima de processos do servidor a ser reservada
+MaxSpareServers — quantidade máxima de processos do servidor a ser reservada
+MaxRequestWorkers — número máximo de processos do servidor permitidos para iniciar.
+MaxConnectionsPerChild — número máximo de requisições que um processo do servidor deve atender
+
+
+<IfModule mpm_prefork_module>
+	StartServers	4
+	MinSpareServers	20
+	MaxSpareServers	40
+	MaxRequestWorkers	200
+	axConnectionsPerChild	20
+</IfModule>
+
+httpd -t
+
+ab -n 1000 -c 10 URL
+-n: Number of requests
+-c: Number of concurrent requests
