@@ -1,0 +1,9 @@
+---
+mysql_root_password: "password"
+app_user: "www-data"
+http_host: "simple-ecomme"
+http_conf: "ecomme.conf"
+http_port: "80" 
+disable_default: true
+repo: https://github.com/alexoslabs2/simple-ecomme.git 
+repo_name: "{{ repo.rsplit('/', 1)[-1].split('.', 1)[0] }}"

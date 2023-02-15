@@ -1,0 +1,69 @@
+---
+  - name: Install git
+    apt:
+      name: git-core
+      state: latest
+      update_cache: yes
+
+  - name: Install Apache and PHP Packages 
+    apt: name={{ item }} state=latest force_apt_get=yes 
+    loop: [ 'apache2', 'php', 'php-mysql', 'libapache2-mod-php' ]
+
+  - name: Clone Ecomme Application
+    git:
+     repo: "{{ repo }}"
+     dest: "{{'/var/www/html/'~ repo_name }}"
+     clone: yes
+     force: yes
+
+  - name: Change simple-ecomme directory owner 
+    file:
+     path: /var/www/html/simple-ecomme/
+     state: directory
+     recurse: yes
+     owner: www-data
+     group: www-data
+
+  - name: Copy Ecomme config file
+    template:
+      src: "files/config.php"
+      dest: "/var/www/html/simple-ecomme/"  
+
+  - name: Set up Apache virtualhost
+    template:
+      src: "files/ecomme.conf.j2"
+      dest: "/etc/apache2/sites-available/{{ http_conf }}"
+
+  - name: Enable new site 
+    shell: "/usr/sbin/a2ensite {{ http_conf }}"
+
+  - name: Disable default Apache site
+    shell: "/usr/sbin/a2dissite 000-default.conf"
+    when: disable_default
+    notify: Reload Apache
+
+  - name: Apache Hardening
+    blockinfile:
+       dest: "/etc/apache2/apache2.conf"
+       block: |
+        KeepAlive Off
+        Options -Indexes -FollowSymlinks
+        ServerSignature Off
+        ServerTokens Prod
+        TraceEnable Off
+        <IfModule mod_headers.c>
+        Header set X-XSS-Protection "1; mode=block"
+        </IfModule>
+        <IfModule mod_headers.c>
+        Header edit Set-Cookie ^(.*)$ $1;HttpOnly;Secure
+        </IfModule>  
+
+  - name: Reload Apache
+    systemd:
+      name: apache2
+      state: reloaded
+
+  - name: Restart Apache
+    systemd: 
+      name: apache2
+      state: restarted

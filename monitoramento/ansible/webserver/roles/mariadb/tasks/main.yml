@@ -1,0 +1,54 @@
+--- 
+  - name: Install MariaDB Packages
+    apt: name={{ item }} update_cache=yes state=latest
+    loop: [ 'mariadb-server', 'python3-pymysql' ]
+
+  - name: Start MariaDB service
+    systemd:
+      name: mariadb
+      state: started
+
+  - name: Sets the root password
+    mysql_user:
+      name: root
+      password: "{{ mysql_root_password }}"
+      login_unix_socket: /var/run/mysqld/mysqld.sock
+
+  - name: Removes all anonymous user accounts
+    mysql_user:
+      name: ''
+      host_all: yes
+      state: absent
+      login_user: root
+      login_password: "{{ mysql_root_password }}"
+
+  - name: Removes the MySQL test database
+    mysql_db:
+      name: test
+      state: absent
+      login_user: root
+      login_password: "{{ mysql_root_password }}"
+
+  - name: Copy Mysql config
+    copy: src=my.cnf dest=/root/.my.cnf
+
+  - name: Start MariaDB service
+    systemd:
+      name: mariadb
+      state: restarted
+
+  - name: Create a new database with name 'ecomme'
+    community.mysql.mysql_db:
+      login_user: root 
+      login_password: "{{ mysql_root_password }}"
+      name: ecomme
+      state: present
+      login_unix_socket: /run/mysqld/mysqld.sock
+
+  - name: Restore Ecomme database
+    community.mysql.mysql_db:
+      login_user: root
+      login_password: "{{ mysql_root_password }}"
+      name: ecomme
+      state: import
+      target: /var/www/html/simple-ecomme/dump.sql
