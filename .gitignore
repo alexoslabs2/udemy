@@ -3,3 +3,7 @@ monitoramento/terraform/webserver/.terraform/providers/registry.terraform.io/has
 monitoramento/terraform/webserver/.terraform.lock.hcl
 monitoramento/terraform/webserver/terraform.tfstate
 monitoramento/terraform/webserver/terraform.tfstate.backup
+Monitoramento/terraform/webserver/.terraform.lock.hcl
+Monitoramento/terraform/webserver/.terraform/providers/registry.terraform.io/hashicorp/aws/3.50.0/linux_amd64/terraform-provider-aws_v3.50.0_x5
+Monitoramento/terraform/webserver/terraform.tfstate
+Monitoramento/terraform/webserver/terraform.tfstate.backup
