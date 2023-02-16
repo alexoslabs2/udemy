@@ -17,6 +17,8 @@
 >Monitoramento/scripts/installecomme.sh 
 >
 >Monitoramento/terraform/webserver/create_ansible_user.sh
+>
+>Monitoramento/scripts/installgrafana.sh
 
 3. Informe o nome da chave AWS em 
 >Monitoramento/terraform/webserver/webapp.tf
