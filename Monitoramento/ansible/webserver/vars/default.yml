@@ -1,5 +1,5 @@
 ---
-mysql_root_password: "password"
+mysql_root_password: "Secret"
 app_user: "www-data"
 http_host: "simple-ecomme"
 http_conf: "ecomme.conf"
