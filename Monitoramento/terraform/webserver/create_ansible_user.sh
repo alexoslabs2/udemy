@@ -1,6 +1,6 @@
 #!/bin/bash
 USER=ansible
-PASS=password
+PASS=Secret #INFORM THE PASSWORD
 HOME=/home/ansible
 LOG=user.log
 SSH_KEY_FILE=/home/ansible/.ssh/authorized_keys
