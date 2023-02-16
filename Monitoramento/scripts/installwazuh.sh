@@ -16,9 +16,11 @@ apt-get update > $log
 
 #Install Dependencies
 echo -ne Installing Dependencies...
+apt-get install -y apt-transport-https zip unzip lsb-release curl gnupg sudo vim >> $log
 sleep 1
 echo Done
-apt-get install -y apt-transport-https zip unzip lsb-release curl gnupg sudo vim >> $log
+
+echo -e
 
 #Install ElasticSeach
 echo -e Installing and Configuring Elasticsearch...
@@ -41,10 +43,13 @@ rm -rf ~/certs/ ~/certs.zip
 systemctl daemon-reload >> $log
 systemctl enable elasticsearch >> $log
 clear
+
 echo -ne Starting Elasticsearch...
 systemctl start elasticsearch
 sleep 1
 echo Done 
+
+echo -e
 
 echo -e Elasticsearch is $(systemctl status elasticsearch | grep "Active:" | awk '{print $3}')
 
@@ -67,14 +72,19 @@ apt-get install -y wazuh-manager >> $log
 systemctl daemon-reload >> $log
 systemctl enable wazuh-manager >> $log
 clear
+
 echo -ne Starting Wazuh Manager...
 systemctl start wazuh-manager
 sleep 1
 echo Done
 
+echo -e
+
 echo -e Wazuh Manager is $(systemctl status wazuh-manager | grep "Active:" | awk '{print $3}')
 sleep 1
 clear
+
+echo -e
 
 #Install Filebeat
 echo -e Installing Filebeat...
@@ -97,12 +107,17 @@ cp /etc/elasticsearch/certs/elasticsearch.key /etc/filebeat/certs/filebeat.key
 systemctl daemon-reload >> $log
 systemctl enable filebeat >> $log
 clear
+
 echo -ne Starting Filebeat...
 systemctl start filebeat
 sleep 1
 echo Done
 
+echo -e
+
 echo -e Filebeat is $(systemctl status filebeat| grep "Active:" | awk '{print $3}')
+
+echo -e
 
 echo -e Testing Filebeat...
 filebeat test output
@@ -137,15 +152,22 @@ sudo -u kibana /usr/share/kibana/bin/kibana-plugin install https://packages.wazu
 systemctl daemon-reload >> $log
 systemctl enable kibana >> $log
 clear
+
 echo -ne Starting Kibana...
 systemctl start kibana
 sleep 1
 echo Done
 
+echo -e
+
 echo -e Kibana is $(systemctl status kibana | grep "Active:" | awk '{print $3}')
 sleep 1
-clear
+
+echo -e 
+
 echo -e Wazuh Installation Finished!
+
+echo -e
 
 # Infos
 echo -e "== Access Information =="
