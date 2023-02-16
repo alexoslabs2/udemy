@@ -6,7 +6,7 @@ description = "SSH from the internet"
 from_port = 22
 to_port = 22
 protocol = "tcp"
-cidr_blocks = ["170.83.152.200/32"]
+cidr_blocks = ["170.83.155.132/32"]
 }
 
 ingress {
@@ -28,12 +28,33 @@ cidr_blocks = ["0.0.0.0/0"]
 
 resource "aws_instance" "webapp" {
 
-ami = "ami-07d02ee1eeb0c996c"
+ami = "ami-0fec2c2e2017f4e7b"
 instance_type = "t2.micro"
 vpc_security_group_ids = [aws_security_group.aws_sg_webapp.id]
 associate_public_ip_address = true
 key_name = "alexos"
 
+# Login to the ec2-user with the aws key.
+connection {
+type        = "ssh"
+user        = "admin"
+private_key = file("/home/alexandro.silva/alexos.pem")
+host        = aws_instance.webapp.public_dns
+}
+
+# Copy in the bash script we want to execute.
+provisioner "file" {
+source      = "create_ansible_user.sh"
+destination = "/tmp/create_ansible_user.sh"
+}
+
+# Change permissions on bash script and execute from ec2-user.
+provisioner "remote-exec" {
+inline = [
+"chmod +x /tmp/create_ansible_user.sh",
+"sudo /tmp/create_ansible_user.sh",
+    ]
+}
 
 tags = {
 Name = "Web Server"

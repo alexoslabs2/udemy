@@ -1,4 +1,5 @@
-#Aplicacao Ecomme
+#Simple PHP Application for tests Installer
+#Autor: Alexos (alexos at alexos dot org)
 #!/bin/bash
 
 DB_PASSWORD="Secret"
