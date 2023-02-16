@@ -62,7 +62,7 @@ key_name = "INFORM YOUR KEY"
 connection {
 type        = "ssh"
 user        = "admin"
-private_key = file("INFORM THE PTH OF THE FILE .PEM") #EXAMPLE file("/home/user/key.pem")
+private_key = file("INFORM THE PATH OF THE FILE .PEM") #EXAMPLE file("/home/user/key.pem")
 host        = aws_instance.wazuh.public_dns 
 }
 
