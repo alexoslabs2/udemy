@@ -24,6 +24,8 @@ systemctl start mariadb
 sleep 1
 echo Done
 
+echo -e
+
 echo -ne Hardening MariaDB...
 mysql_secure_installation << EOF
 n
@@ -37,13 +39,16 @@ y
 EOF
 sleep 1
 echo Done
-clear
+
+echo -e
 
 echo -ne Creating database ecomme...
 mysql -u root -p$DB_PASSWORD -e "CREATE DATABASE ecomme;"
 mysql -u root -p$DB_PASSWORD -e "GRANT ALL ON ecomme.* TO 'ecomme_user'@'%' IDENTIFIED BY 'password';FLUSH PRIVILEGES;"
 sleep 1
 echo Done
+
+echo -e
 
 echo -ne Hardening Apache2...
 cd /etc/apache2
@@ -63,6 +68,8 @@ sed -e 's/expose_php = On/expose_php = Off/' /etc/php/7.4/apache2/
 a2dissite 000-default
 sleep 1
 echo Done
+
+echo -e
 
 echo -ne Installing Ecomme Application...
 cd /var/www/html
