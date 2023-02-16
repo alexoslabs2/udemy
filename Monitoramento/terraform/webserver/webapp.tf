@@ -6,7 +6,7 @@ description = "SSH from the internet"
 from_port = 22
 to_port = 22
 protocol = "tcp"
-cidr_blocks = ["170.83.155.132/32"]
+cidr_blocks = ["0.0.0.0/0"]
 }
 
 ingress {
@@ -32,13 +32,13 @@ ami = "ami-0fec2c2e2017f4e7b"
 instance_type = "t2.micro"
 vpc_security_group_ids = [aws_security_group.aws_sg_webapp.id]
 associate_public_ip_address = true
-key_name = "alexos"
+key_name = "INFORM YOUR KEY"
 
 # Login to the ec2-user with the aws key.
 connection {
 type        = "ssh"
 user        = "admin"
-private_key = file("/home/alexandro.silva/alexos.pem")
+private_key = file("INFORM THE PTH OF THE FILE .PEM") #EXAMPLE file("/home/user/key.pem")
 host        = aws_instance.webapp.public_dns
 }
 
