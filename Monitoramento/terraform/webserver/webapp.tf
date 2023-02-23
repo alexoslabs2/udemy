@@ -56,6 +56,14 @@ inline = [
     ]
 }
 
+# Change home's ansible owner
+provisioner "remote-exec" {
+inline = [
+"cd /home/",
+"sudo chown -R ansible. ansible",
+    ]
+}
+
 tags = {
 Name = "Web Server"
 }
