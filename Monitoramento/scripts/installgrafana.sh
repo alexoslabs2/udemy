@@ -215,7 +215,7 @@ echo -ne Creating MySQL Exporter Config File...
 tee /etc/.mysqld_exporter.cnf<<EOF>> $LOG
 [client]
 user=mysqld_exporter
-password=password
+password=$DB_PASSWORD
 EOF
 chown root:prometheus /etc/.mysqld_exporter.cnf
 sleep 1
