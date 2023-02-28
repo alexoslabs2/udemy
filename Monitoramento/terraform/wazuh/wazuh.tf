@@ -58,14 +58,6 @@ vpc_security_group_ids = [aws_security_group.aws_sg_wazuh.id]
 associate_public_ip_address = true
 key_name = "INFORM YOUR KEY"
 
-# Login to the ec2-user with the aws key.
-connection {
-type        = "ssh"
-user        = "admin"
-private_key = file("INFORM THE PATH OF THE FILE .PEM") #EXAMPLE file("/home/user/key.pem")
-host        = aws_instance.wazuh.public_dns 
-}
-
 tags = {
 Name = "Wazuh"
 }
