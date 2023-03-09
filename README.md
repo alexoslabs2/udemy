@@ -2,9 +2,9 @@
 
 ## Recursos para os cursos disponibilizados na plataforma Udemy
 
-<a href="https://www.udemy.com/course/servicos-de-rede-linux-e-seguranca">Serviços de rede Linux e Segurança na prática</a>
+<a href="https://www.udemy.com/course/servicos-de-rede-linux-e-seguranca/?referralCode=0FD399A273F5207E9C36">Serviços de rede Linux e Segurança na prática</a>
 
-<a href="">Monitoramento de Performance, Disponibilidade e Segurança</a>
+<a href="https://www.udemy.com/course/monitoramento-de-performance-disponibilidade-e-seguranca/?referralCode=B0E9AEBADF7B6E7A8633">Monitoramento de Performance, Disponibilidade e Segurança</a>
 
 ## Observações Importantes
 
